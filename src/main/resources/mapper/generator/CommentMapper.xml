@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangq.mayday.mapper.custom.CommentMapperCustom">
+    <resultMap id="BaseResultMap" type="com.zhangq.mayday.model.domain.Comment">
+        <id column="commentId" jdbcType="INTEGER" property="commentId"/>
+        <result column="articleId" jdbcType="INTEGER" property="article_id"/>
+        <result column="commentAuthor" jdbcType="VARCHAR" property="commentAuthor"/>
+        <result column="commentAuthorEmail" jdbcType="VARCHAR" property="commentAuthorEmail"/>
+        <result column="commentAuthorUrl" jdbcType="TIMESTAMP" property="commentAuthorUrl"/>
+        <result column="commentAuthorIp" jdbcType="VARCHAR" property="commentAuthorIp"/>
+        <result column="commentAuthorAvatarMd5" jdbcType="VARCHAR" property="commentAuthorAvatarMd5"/>
+        <result column="commentDate" jdbcType="TIMESTAMP" property="commentDate"/>
+        <result column="commentContent" jdbcType="VARCHAR" property="commentContent"/>
+        <result column="commentAgent" jdbcType="INTEGER" property="commentAgent"/>
+        <result column="commentParent" jdbcType="INTEGER" property="commentParent"/>
+        <result column="commentStatus" jdbcType="INTEGER" property="commentStatus"/>
+        <result column="isAdmin" jdbcType="INTEGER" property="isAdmin"/>
+        <result column="replyCommentId" jdbcType="INTEGER" property="replyCommentId"/>
+    </resultMap>
+    <sql id="whereCommentCustom">
+        <where>1=1
+            <if test="commentStatus != null">
+                and commentStatus=#{commentStatus}
+            </if>
+            <if test="articleId != null">
+                and articleId=#{articleId}
+            </if>
+
+        </where>
+    </sql>
+    <sql id="whereComment">
+        <where>1=1
+            <if test="commentId !=null">
+            and replyCommentId=#{commentId}
+            </if>
+            <if test="articleId!=null">
+               and articleId=#{articleId}
+            </if>
+        </where>
+    </sql>
+    <select id="findPageComment"
+            resultType="com.zhangq.mayday.model.domain.Comment"
+            parameterType="com.zhangq.mayday.model.domain.Comment">
+
+        SELECT
+        com.*
+        FROM
+        Comment com
+         JOIN mayday_article art ON com.articleId = art.id
+        <include refid="whereCommentCustom"></include>
+        and replyCommentId is null or trim(replyCommentId)=''
+        GROUP BY
+        com.commentId ORDER BY com.commentDate DESC
+    </select>
+    <select id="countByStatus" resultType="integer">
+        SELECT COUNT(*) FROM Comment
+        WHERE commentStatus =#{status} and replyCommentId is null or trim(replyCommentId)=''
+    </select>
+    <insert id="insert" parameterType="com.zhangq.mayday.model.domain.Comment" useGeneratedKeys="true"
+            keyProperty="commentId">
+        insert into Comment ( articleId,
+        commentAuthor, commentAuthorEmail, commentAuthorUrl,
+        commentAuthorIp, commentAuthorAvatarMd5, commentDate,
+        commentContent, commentAgent, commentParent,
+        commentStatus, isAdmin, replyCommentId
+        )
+        values ( #{articleId,jdbcType=INTEGER},
+        #{commentAuthor,jdbcType=VARCHAR}, #{commentAuthorEmail,jdbcType=VARCHAR}, #{commentAuthorUrl,jdbcType=VARCHAR},
+        #{commentAuthorIp,jdbcType=VARCHAR}, #{commentAuthorAvatarMd5,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP},
+        #{commentContent,jdbcType=VARCHAR}, #{commentAgent,jdbcType=INTEGER}, #{commentParent,jdbcType=INTEGER},
+        #{commentStatus,jdbcType=INTEGER}, #{isAdmin,jdbcType=INTEGER}, #{replyCommentId,jdbcType=INTEGER}
+        )
+    </insert>
+    <select id="findAllChildComment" parameterType="com.zhangq.mayday.model.domain.Comment" resultType="com.zhangq.mayday.model.domain.Comment">
+        SELECT
+        com.*
+        FROM
+        Comment com
+        <include refid="whereComment"></include>
+        GROUP BY
+        com.commentId ORDER BY com.commentDate DESC
+    </select>
+</mapper>
