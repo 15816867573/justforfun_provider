@@ -1,8 +1,8 @@
 package com.zhangq.mayday.controller;
 
 import com.zhangq.mayday.mapper.generator.ArticleMapper;
-import com.zhangq.mayday.model.domain.Article;
-import com.zhangq.mayday.model.domain.ArticleExample;
+import com.zhangq.mayday.model.domain.*;
+import com.zhangq.mayday.model.dto.ArchiveBo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,4 +79,65 @@ public class ArticleController {
     public long updateByPrimaryKey(@RequestBody Article example) {
         return articleMapper.updateByPrimaryKey(example);
     }
+    /**
+     * articleMapperCustom
+    * */
+    @RequestMapping(value = "/articleMapperCustom")
+    @ResponseBody
+    public List<ArticleCustom> articleMapperCustom(@RequestParam("articleStatus") Integer articleStatus) {
+        return articleMapper.articleMapperCustom(articleStatus);
+    }
+    @RequestMapping(value = "/findAllArticle")
+    @ResponseBody
+    public List<ArticleCustom> findAllArticle(@RequestParam("articleStatus") Integer articleStatus,  @RequestParam("articlePost") String articlePost) {
+        return articleMapper.findAllArticle(articleStatus,articlePost);
+    }
+    @RequestMapping(value = "/countByStatus")
+    @ResponseBody
+    public Integer countByStatus(@RequestParam(value = "articleStatus",required = false)  Integer articleStatus, @RequestParam(value = "articlePost",required = false) String articlePost) {
+         Integer i= articleMapper.countByStatus(articleStatus,articlePost);
+        return i;
+    }
+    @RequestMapping(value = "/updateStatus")
+    @ResponseBody
+    public void updateStatus(@RequestParam("id") Integer id, @RequestParam("articleStatus") Integer articleStatus) {
+         articleMapper.updateStatus(id,articleStatus);
+    }
+    @RequestMapping(value = "/findByArticleId")
+    @ResponseBody
+    public ArticleCustom findByArticleId(Integer article_id) {
+        return articleMapper.findByArticleId(article_id);
+    }
+    @RequestMapping(value = "/findDateAndCount")
+    @ResponseBody
+    public List<ArchiveBo> findDateAndCount() {
+        return articleMapper.findDateAndCount();
+    }
+    @RequestMapping(value = "/findPageArticle")
+    @ResponseBody
+    public List<ArticleCustom> findPageArticle(@RequestBody ArticleCustom articleCustom) {
+        return articleMapper.findPageArticle(articleCustom);
+    }
+    @RequestMapping(value = "/findRepeatByUrl")
+    @ResponseBody
+    public int findRepeatByUrl(@RequestParam("articleUrl") String articleUrl) {
+        return articleMapper.findRepeatByUrl(articleUrl);
+    }
+    @RequestMapping(value = "/findByArticleUrl")
+    @ResponseBody
+    public ArticleCustom findByArticleUrl( @RequestParam("articleUrl")String articleUrl) {
+        return articleMapper.findByArticleUrl(articleUrl);
+    }
+    @RequestMapping(value = "/findArtileByCategory")
+    @ResponseBody
+    public List<ArticleCustom> findArtileByCategory(@RequestBody Category category, @RequestParam("articleStatus") Integer articleStatus) {
+        return articleMapper.findArtileByCategory(category,articleStatus);
+    }
+    @RequestMapping(value = "/findArtileByTag")
+    @ResponseBody
+    public List<ArticleCustom> findArtileByTag(@RequestBody Tag tag, @RequestParam("articleStatus") Integer articleStatus) {
+        return articleMapper.findArtileByTag(tag,articleStatus);
+    }
+
+
 }

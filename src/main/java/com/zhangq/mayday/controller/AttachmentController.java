@@ -46,7 +46,7 @@ public class AttachmentController {
 
     @RequestMapping(value = "/selectByExample")
     @ResponseBody
-    public List<Attachment> selectByExample(@RequestBody AttachmentExample example) {
+    public List<Attachment> selectByExample(@RequestBody(required = false) AttachmentExample example) {
         return attachmentMapper.selectByExample(example);
     }
 

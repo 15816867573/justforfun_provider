@@ -16,67 +16,67 @@ public class LinkController {
 
     @RequestMapping(value = "/countByExample")
     @ResponseBody
-    public long countByExample(@RequestBody LinkExample example) {
+    public long countByExample(@RequestBody(required = false) LinkExample example) {
         return linkMapper.countByExample(example);
     }
 
     @RequestMapping(value = "/deleteByExample")
     @ResponseBody
-    public int deleteByExample(@RequestBody LinkExample example) {
+    public int deleteByExample(@RequestBody(required = false) LinkExample example) {
         return linkMapper.deleteByExample(example);
     }
 
     @RequestMapping(value = "/deleteByPrimaryKey")
     @ResponseBody
-    public int deleteByPrimaryKey(@RequestParam("linkId") Integer linkId) {
+    public int deleteByPrimaryKey(@RequestParam(value = "linkId",required = false) Integer linkId) {
         return linkMapper.deleteByPrimaryKey(linkId);
     }
 
     @RequestMapping(value = "/insert")
     @ResponseBody
-    public int insert(@RequestBody Link example) {
+    public int insert(@RequestBody(required = false) Link example) {
         return linkMapper.insert(example);
     }
 
     @RequestMapping(value = "/insertSelective")
     @ResponseBody
-    public int insertSelective(@RequestBody Link example) {
+    public int insertSelective(@RequestBody(required = false) Link example) {
         return linkMapper.insertSelective(example);
     }
 
     @RequestMapping(value = "/selectByExample")
     @ResponseBody
-    public List<Link> selectByExample(@RequestBody LinkExample example) {
+    public List<Link> selectByExample(@RequestBody(required = false) LinkExample example) {
         return linkMapper.selectByExample(example);
     }
 
     @RequestMapping(value = "/selectByPrimaryKey")
     @ResponseBody
-    public Link selectByPrimaryKey(@RequestParam Integer linkId) {
+    public Link selectByPrimaryKey(@RequestParam(value = "linkId",required = false) Integer linkId) {
         return linkMapper.selectByPrimaryKey(linkId);
     }
 
     @RequestMapping(value = "/updateByExampleSelective")
     @ResponseBody
-    public int updateByExampleSelective(@RequestBody Link record, @RequestBody LinkExample example) {
+    public int updateByExampleSelective(@RequestParam(value = "record",required = false) Link record, @RequestBody(required = false) LinkExample example) {
         return linkMapper.updateByExampleSelective(record, example);
     }
 
     @RequestMapping(value = "/updateByExample")
     @ResponseBody
-    public int updateByExample(@RequestBody Link record, @RequestBody LinkExample example) {
+    public int updateByExample(@RequestBody(required = false) Link record, @RequestBody(required = false) LinkExample example) {
         return linkMapper.updateByExample(record, example);
     }
 
     @RequestMapping(value = "/updateByPrimaryKeySelective")
     @ResponseBody
-    public int updateByPrimaryKeySelective(@RequestBody Link example) {
+    public int updateByPrimaryKeySelective(@RequestBody(required = false) Link example) {
         return linkMapper.updateByPrimaryKeySelective(example);
     }
 
     @RequestMapping(value = "/updateByPrimaryKey")
     @ResponseBody
-    public int updateByPrimaryKey(@RequestBody Link example) {
+    public int updateByPrimaryKey(@RequestBody(required = false) Link example) {
         return linkMapper.updateByPrimaryKey(example);
     }
 }

@@ -28,4 +28,6 @@ public interface ThemeMapper {
 	int updateByPrimaryKeySelective(Theme record);
 
 	int updateByPrimaryKey(Theme record);
+
+	void updateStatus(@Param(value = "status") int status, @Param(value = "id") int id);
 }

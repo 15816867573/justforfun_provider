@@ -79,4 +79,11 @@ public class ThemeController {
     public int updateByPrimaryKey(@RequestBody Theme example) {
         return themeMapper.updateByPrimaryKey(example);
     }
+
+    @RequestMapping(value = "/updateStatus")
+    @ResponseBody
+    public void updateStatus(@RequestParam(value = "status") int status, @RequestParam(value = "id") int id) {
+         themeMapper.updateStatus(status,id);
+    }
+
 }

@@ -86,7 +86,7 @@ public class UserController {
 
     @RequestMapping(value = "/getByNameAndPwd")
     @ResponseBody
-    public User getByNameAndPwd(@PathVariable String name,@PathVariable String pwd) {
+    public User getByNameAndPwd(@RequestParam("name") String name,@RequestParam("pwd") String pwd) {
         User user= userMapper.getByNameAndPwd( name, pwd);
         return user;
     }

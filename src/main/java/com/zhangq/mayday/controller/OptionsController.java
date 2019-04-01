@@ -46,7 +46,7 @@ public class OptionsController {
 
     @RequestMapping(value = "/selectByExample")
     @ResponseBody
-    public List<Options> selectByExample(@RequestBody OptionsExample example) {
+    public List<Options> selectByExample(@RequestBody(required = false) OptionsExample example) {
         return optionsMapper.selectByExample(example);
     }
 
